@@ -1,0 +1,59 @@
+!!! 5
+html(lang='en', ng-app='todomvc', data-framework='angularjs')
+head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title AngularJS • TodoMVC
+    link(rel='stylesheet', href='css/base.css')
+    style.
+      [ng-cloak] {
+      display: none;
+      }
+    body
+        section#todoapp(ng-controller='TodoCtrl')
+            header#header
+                h1 todos
+                form#todo-form(ng-submit='addTodo()')
+                    input#new-todo(placeholder='What needs to be done?', ng-model='newTodo', autofocus='autofocus')
+            section#main(ng-show='todos.length', ng-cloak='ng-cloak')
+                input#toggle-all(type='checkbox', ng-model='allChecked', ng-click='markAll(allChecked)')
+                label(for='toggle-all') Mark all as complete
+                ul#todo-list
+                    li(ng-repeat='todo in todos | filter:statusFilter', ng-class='{completed: todo.completed, editing: todo == editedTodo}')
+                        .view
+                            input.toggle(type='checkbox', ng-model='todo.completed', ng-change='todoCompleted(todo)')
+                            label(ng-dblclick='editTodo(todo)') {{todo.title}}
+                            button.destroy(ng-click='removeTodo(todo)')
+                        form(ng-submit='doneEditing(todo)')
+                            input.edit(ng-model='todo.title', todo-blur='doneEditing(todo)', todo-focus='todo == editedTodo')
+            footer#footer(ng-show='todos.length', ng-cloak='ng-cloak')
+                span#todo-count
+                    strong {{remainingCount}}
+                    ng-pluralize(count='remainingCount', when='{ one: \'item left\', other: \'items left\' }')
+                ul#filters
+                    li
+                        a(ng-class='{selected: location.path() == \'/\'} ', href='#/') All
+                    li
+                        a(ng-class='{selected: location.path() == \'/active\'}', href='#/active') Active
+                    li
+                        a(ng-class='{selected: location.path() == \'/completed\'}', href='#/completed') Completed
+                button#clear-completed(ng-click='clearCompletedTodos()', ng-show='ng-show', remainingcount='remainingCount')
+        footer#info
+            p Double-click to edit a todo
+            p
+                | Credits:
+                a(target='_blank', href='http://twitter.com/salimkayabasi') Salim KAYABAŞI
+                | ,
+                a(target='_blank', href='http://twitter.com/maniacneron') Ertuğrul TAŞ
+                | ,
+                a(target='_blank', href='http://twitter.com/huseyinbabal') Hüseyin BABAL
+                | ,
+            p
+                | Forked from
+                a(target='_blank', href='https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/angularjs-perf') TodoMVC
+        script(src='js/angular.js')
+        script(src='js/app.js')
+        script(src='js/controllers/todoCtrl.js')
+        script(src='js/services/todoStorage.js')
+        script(src='js/directives/todoFocus.js')
+        script(src='js/directives/todoBlur.js')
