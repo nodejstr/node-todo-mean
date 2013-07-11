@@ -21,14 +21,21 @@ exports.getAll = function (req, res) {
 
 exports.add = function (req, res) {
     var todo = new ToDo(req.body);
+    console.log(JSON.stringify(todo))
+//    ToDo.update({ _id: todo._id },todo,{upsert:true},function(err){
+//        if (err)
+//            res.json(err)
+//        else
+//            res.json({success: true, todo: todo})
+//
+//    })
     todo.save(function (err) {
         if (err)
             res.json(err)
         else
-            res.json({success: true})
+            res.json({success: true, todo: todo})
     })
 }
-
 
 exports.del = function (req, res) {
     var todo = new ToDo(req.body);
@@ -39,5 +46,3 @@ exports.del = function (req, res) {
             res.json({success: true})
     })
 }
-
-

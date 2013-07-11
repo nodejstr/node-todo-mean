@@ -14,12 +14,14 @@ todomvc.factory('todoStorage', ['$http', function ($http) {
         put: function (todo) {
             $http({method: 'post', url: '/add', data: todo}).
                 success(function (data, status, headers, config) {
+                    if (data.success)
+                        angular.copy(angular.fromJson(data.todo), todo);
                     console.log(data)
                 }).
                 error(function (data, status, headers, config) {
                     console.log(data)
                 });
-        } ,
+        },
         del: function (todo) {
             $http({method: 'post', url: '/del', data: todo}).
                 success(function (data, status, headers, config) {
