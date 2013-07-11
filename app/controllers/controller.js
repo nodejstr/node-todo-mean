@@ -29,3 +29,15 @@ exports.add = function (req, res) {
     })
 }
 
+
+exports.del = function (req, res) {
+    var todo = new ToDo(req.body);
+    todo.remove(function (err) {
+        if (err)
+            res.json(err)
+        else
+            res.json({success: true})
+    })
+}
+
+

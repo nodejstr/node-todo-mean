@@ -19,6 +19,15 @@ todomvc.factory('todoStorage', ['$http', function ($http) {
                 error(function (data, status, headers, config) {
                     console.log(data)
                 });
+        } ,
+        del: function (todo) {
+            $http({method: 'post', url: '/del', data: todo}).
+                success(function (data, status, headers, config) {
+                    console.log(data)
+                }).
+                error(function (data, status, headers, config) {
+                    console.log(data)
+                });
         }
     };
 }]);

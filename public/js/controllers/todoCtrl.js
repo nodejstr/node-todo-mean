@@ -62,7 +62,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 	$scope.removeTodo = function (todo) {
 		$scope.remainingCount -= todo.completed ? 0 : 1;
 		todos.splice(todos.indexOf(todo), 1);
-		//todoStorage.put(todos);
+		todoStorage.del(todo);
 	};
 
 	$scope.todoCompleted = function (todo) {
