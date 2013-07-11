@@ -8,7 +8,6 @@
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage, filterFilter) {
 	var todos = $scope.todos = todoStorage.get();
-
 	$scope.newTodo = '';
 	$scope.remainingCount = filterFilter(todos, {completed: false}).length;
 	$scope.editedTodo = null;

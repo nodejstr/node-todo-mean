@@ -1,7 +1,15 @@
 var express = require('express')
     , fs = require('fs')
+    , mongoose = require('mongoose')
 var env = process.env.NODE_ENV || 'development'
     , config = require('./config/config')[env]
+
+mongoose.connect(config.db, {safe: true})
+var models_path = __dirname + '/app/models'
+fs.readdirSync(models_path).forEach(function (file) {
+    require(models_path + '/' + file)
+})
+
 
 var app = express()
 var port = process.env.PORT || 3333

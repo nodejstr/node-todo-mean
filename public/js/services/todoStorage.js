@@ -4,16 +4,13 @@
 /**
  * Services that persists and retrieves TODOs from localStorage
 */
-todomvc.factory('todoStorage', function () {
+todomvc.factory('todoStorage', ['$http', function($http) {
 	var STORAGE_ID = 'todos-angularjs-perf';
 
 	return {
-		get: function () {
-			return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-		},
-
+		get: function(){return nodetodos},
 		put: function (todos) {
 			localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
 		}
 	};
-});
+}]);
