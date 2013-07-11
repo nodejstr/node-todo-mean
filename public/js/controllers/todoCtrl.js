@@ -6,7 +6,7 @@
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage, filterFilter) {
+todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage, filterFilter, socket) {
 	var todos = $scope.todos = todoStorage.get();
 	$scope.newTodo = '';
 	$scope.remainingCount = filterFilter(todos, {completed: false}).length;
@@ -33,12 +33,12 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 		if (newTodo.length === 0) {
 			return;
 		}
-
-		todos.push({
-			title: newTodo,
-			completed: false
-		});
-		todoStorage.put(todos);
+        var todo = {
+            title: newTodo,
+            completed: false
+        }
+		todos.push(todo);
+		todoStorage.put(todo);
 
 		$scope.newTodo = '';
 		$scope.remainingCount++;
@@ -56,13 +56,13 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 			$scope.removeTodo(todo);
 		}
 
-		todoStorage.put(todos);
+		//todoStorage.put(todos);
 	};
 
 	$scope.removeTodo = function (todo) {
 		$scope.remainingCount -= todo.completed ? 0 : 1;
 		todos.splice(todos.indexOf(todo), 1);
-		todoStorage.put(todos);
+		//todoStorage.put(todos);
 	};
 
 	$scope.todoCompleted = function (todo) {
@@ -71,14 +71,14 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 		} else {
 			$scope.remainingCount++;
 		}
-		todoStorage.put(todos);
+		//todoStorage.put(todos);
 	};
 
 	$scope.clearCompletedTodos = function () {
 		$scope.todos = todos = todos.filter(function (val) {
 			return !val.completed;
 		});
-		todoStorage.put(todos);
+		//todoStorage.put(todos);
 	};
 
 	$scope.markAll = function (completed) {
@@ -86,6 +86,6 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 			todo.completed = completed;
 		});
 		$scope.remainingCount = completed ? 0 : todos.length;
-		todoStorage.put(todos);
+		//todoStorage.put(todos);
 	};
 });
