@@ -38,7 +38,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
             completed: false
         }
         todos.push(todo);
-        todoStorage.put(todo);
+        todoStorage.add(todo);
 
         $scope.newTodo = '';
         $scope.remainingCount++;
@@ -55,7 +55,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
         if (!todo.title) {
             $scope.removeTodo(todo);
         } else {
-            todoStorage.put(todo);
+            todoStorage.update(todo);
         }
     };
 
@@ -71,7 +71,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
         } else {
             $scope.remainingCount++;
         }
-        todoStorage.put(todo);
+        todoStorage.update(todo);
     };
 
     $scope.clearCompletedTodos = function () {
@@ -90,6 +90,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
     $scope.markAll = function (completed) {
         todos.forEach(function (todo) {
             todo.completed = completed;
+            todoStorage.update(todo);
         });
         $scope.remainingCount = completed ? 0 : todos.length;
     };
